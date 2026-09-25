@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .font-caveat {
+    font-family: var(--font-caveat), cursive;
+  }
+  .font-sans {
+    font-family: var(--font-jakarta), sans-serif;
+  }
+}
+
+:root {
+  --background: #fafcf8;
+  --foreground: #1c2e24;
+}
+
+body {
+  background-color: #fafcf8;
+  color: #1c2e24;
+  font-family: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+}
