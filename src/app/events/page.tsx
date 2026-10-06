@@ -21,6 +21,7 @@ import {
   Heart,
   ArrowRight,
 } from "lucide-react";
+import { useFavourites, FavouriteItem } from "@/context/FavouritesContext";
 
 interface EventItem {
   id: string;
@@ -115,6 +116,7 @@ export default function EventsPage() {
   useAuthGuard();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
+  const { isFavourite, toggleFavourite } = useFavourites();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -303,11 +305,10 @@ export default function EventsPage() {
               <button
                 key={idx}
                 onClick={() => setCurrentSlide(idx)}
-                className={`h-2.5 rounded-full transition-all duration-300 ${
-                  idx === currentSlide
+                className={`h-2.5 rounded-full transition-all duration-300 ${idx === currentSlide
                     ? "bg-[#0f5c35] w-7"
                     : "bg-slate-300 w-2.5"
-                }`}
+                  }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
             ))}
@@ -340,11 +341,32 @@ export default function EventsPage() {
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  
+
                   {/* Badge */}
                   <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-[#0f5c35] font-bold text-xs px-3 py-1 rounded-full shadow-sm border border-emerald-100">
                     {event.badge}
                   </span>
+                  
+                  {/* Favourite Button */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleFavourite({
+                        id: event.id,
+                        type: "event",
+                        title: event.title1,
+                        subtitle: event.title2,
+                        image: event.src,
+                        link: "/events",
+                      });
+                    }}
+                    className="absolute top-4 right-4 bg-white/90 hover:bg-white text-rose-500 rounded-full p-2 backdrop-blur-md transition-colors shadow-sm"
+                  >
+                    <Heart
+                      className="w-5 h-5"
+                      fill={isFavourite(event.id) ? "currentColor" : "none"}
+                    />
+                  </button>
                 </div>
 
                 {/* Card Content */}
@@ -459,11 +481,32 @@ export default function EventsPage() {
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  
+
                   {/* Badge */}
                   <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-[#0f5c35] font-bold text-xs px-3 py-1 rounded-full shadow-sm border border-emerald-100">
                     {templeEvent.badge}
                   </span>
+                  
+                  {/* Favourite Button */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleFavourite({
+                        id: templeEvent.id,
+                        type: "event",
+                        title: templeEvent.title1,
+                        subtitle: templeEvent.title2,
+                        image: templeEvent.src,
+                        link: "/events",
+                      });
+                    }}
+                    className="absolute top-4 right-4 bg-white/90 hover:bg-white text-rose-500 rounded-full p-2 backdrop-blur-md transition-colors shadow-sm"
+                  >
+                    <Heart
+                      className="w-5 h-5"
+                      fill={isFavourite(templeEvent.id) ? "currentColor" : "none"}
+                    />
+                  </button>
                 </div>
 
                 {/* Card Content */}
@@ -601,11 +644,32 @@ export default function EventsPage() {
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  
+
                   {/* Badge */}
                   <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-[#0f5c35] font-bold text-xs px-3 py-1 rounded-full shadow-sm border border-emerald-100">
                     {program.badge}
                   </span>
+                  
+                  {/* Favourite Button */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleFavourite({
+                        id: program.id,
+                        type: "event",
+                        title: program.title1,
+                        subtitle: program.title2,
+                        image: program.src,
+                        link: "/events",
+                      });
+                    }}
+                    className="absolute top-4 right-4 bg-white/90 hover:bg-white text-rose-500 rounded-full p-2 backdrop-blur-md transition-colors shadow-sm"
+                  >
+                    <Heart
+                      className="w-5 h-5"
+                      fill={isFavourite(program.id) ? "currentColor" : "none"}
+                    />
+                  </button>
                 </div>
 
                 {/* Card Content */}
@@ -651,7 +715,7 @@ export default function EventsPage() {
         {selectedEvent && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
             <div className="bg-white rounded-[28px] max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-100 relative overflow-hidden flex flex-col">
-              
+
               {/* Modal Image Header */}
               <div className="relative h-64 sm:h-72 w-full flex-shrink-0">
                 <Image
@@ -661,7 +725,7 @@ export default function EventsPage() {
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                
+
                 {/* Close Button */}
                 <button
                   onClick={() => setSelectedEvent(null)}
@@ -682,7 +746,7 @@ export default function EventsPage() {
 
               {/* Modal Details Content */}
               <div className="p-6 sm:p-8 space-y-6">
-                
+
                 {/* Key Meta Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-100">
                   <div className="flex items-center gap-3">
@@ -752,6 +816,7 @@ export default function EventsPage() {
                     ))}
                   </ul>
                 </div>
+
 
                 {/* Modal Footer */}
                 <div className="pt-4 border-t border-slate-100 flex justify-end">

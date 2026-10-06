@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Caveat } from "next/font/google";
 import "./globals.css";
+import { FavouritesProvider } from "@/context/FavouritesContext";
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
@@ -31,7 +32,9 @@ export default function RootLayout({
       className={`${plusJakarta.variable} ${caveat.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans bg-[#fafcf8] text-slate-800">
-        {children}
+        <FavouritesProvider>
+          {children}
+        </FavouritesProvider>
       </body>
     </html>
   );
