@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/footer/Footer";
-import { Users, Calendar, Landmark, Heart, ArrowRight, Newspaper } from "lucide-react";
+import { Users, Calendar, Landmark, Heart, ArrowRight, Newspaper, Brain } from "lucide-react";
 import { useAuthGuard } from "@/hooks/useAuthGuard";
 
 export default function HomePage() {
@@ -87,7 +87,7 @@ export default function HomePage() {
     },
   ];
 
-  const cards = [
+ const cards = [
     {
       title: "Community",
       subtitle: "Join & Connect",
@@ -127,18 +127,31 @@ export default function HomePage() {
       arrowBgClass: "bg-[#fde3d1]",
       arrowIconClass: "text-[#f97316]",
     },
+    // {
+    //   title: "Festivals",
+    //   subtitle: "Celebrate Together",
+    //   icon: Heart,
+    //   href: "/events",
+    //   bgClass: "bg-[#fcecf1]",
+    //   iconBgClass: "bg-[#fb7185]",
+    //   iconColorClass: "text-white",
+    //   textClass: "text-[#881337]",
+    //   subtextClass: "text-[#fb7185]",
+    //   arrowBgClass: "bg-[#f9d7e3]",
+    //   arrowIconClass: "text-[#fb7185]",
+    // },
     {
-      title: "Festivals",
-      subtitle: "Celebrate Together",
-      icon: Heart,
-      href: "/events",
-      bgClass: "bg-[#fcecf1]",
-      iconBgClass: "bg-[#fb7185]",
+      title: "Quiz",
+      subtitle: "Test Your Knowledge",
+      icon: Brain,
+      href: "/quizz",
+      bgClass: "bg-[#f0ecfe]",
+      iconBgClass: "bg-[#7c3aed]",
       iconColorClass: "text-white",
-      textClass: "text-[#881337]",
-      subtextClass: "text-[#fb7185]",
-      arrowBgClass: "bg-[#f9d7e3]",
-      arrowIconClass: "text-[#fb7185]",
+      textClass: "text-[#3b0764]",
+      subtextClass: "text-[#7c3aed]",
+      arrowBgClass: "bg-[#e0d9fc]",
+      arrowIconClass: "text-[#7c3aed]",
     },
   ];
 
@@ -201,6 +214,8 @@ export default function HomePage() {
           alt="Kongu Temple"
           fill
           priority
+          loading="eager"
+          sizes="100vw"
           className="object-cover object-center"
         />
         {/* Subtle gradient overlay */}
@@ -210,36 +225,39 @@ export default function HomePage() {
       {/* Main Content Area */}
       <main className="w-full max-w-7xl mx-auto px-4 md:px-8 py-8 flex-1">
 
-        {/* Four Info Cards overlapping the hero section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 relative -mt-10 z-10 pb-12">
+        {/* Info Cards overlapping the hero section */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 relative -mt-10 z-10 pb-12">
           {cards.map((card, idx) => (
             <Link
               key={idx}
               href={card.href}
-              className={`${card.bgClass} rounded-[20px] p-5 shadow-sm border border-white/60 hover:shadow-md hover:-translate-y-1 transition-all duration-300 cursor-pointer group flex flex-col min-h-[140px]`}
+              className={`${card.bgClass} rounded-2xl p-4 shadow-lg border border-white/90 hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] transition-all duration-300 cursor-pointer group flex flex-col justify-between min-h-[130px] relative overflow-hidden`}
             >
-              {/* Icon Circle */}
-              <div className={`w-[44px] h-[44px] ${card.iconBgClass} rounded-full flex items-center justify-center mb-6 shadow-sm`}>
-                <card.icon
-                  className={`w-[22px] h-[22px] ${card.iconColorClass}`}
-                  fill={card.title === "Festivals" || card.title === "Community" || card.title === "Temples" ? "currentColor" : "none"}
-                  strokeWidth={card.title === "Festivals" ? 0 : 2}
-                />
+              {/* Decorative bg circle */}
+              <div className={`absolute -top-5 -right-5 w-20 h-20 rounded-full ${card.iconBgClass} opacity-10`} />
+
+              {/* Top row: icon + arrow */}
+              <div className="flex items-start justify-between relative z-10">
+                <div className={`w-[38px] h-[38px] ${card.iconBgClass} rounded-[10px] flex items-center justify-center shadow-md`}>
+                  <card.icon
+                    className={`w-[18px] h-[18px] ${card.iconColorClass}`}
+                    fill={card.title === "Festivals" || card.title === "Community" || card.title === "Temples" ? "currentColor" : "none"}
+                    strokeWidth={card.title === "Festivals" ? 0 : 2}
+                  />
+                </div>
+                <div className={`w-[26px] h-[26px] rounded-full flex-shrink-0 ${card.arrowBgClass} flex items-center justify-center group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200 shadow-sm`}>
+                  <ArrowRight className={`w-[11px] h-[11px] ${card.arrowIconClass}`} strokeWidth={2.5} />
+                </div>
               </div>
 
-              {/* Text & Arrow */}
-              <div className="mt-auto flex items-end justify-between">
-                <div className="pr-2">
-                  <h3 className={`text-[17px] font-extrabold ${card.textClass} tracking-tight leading-tight`}>
-                    {card.title}
-                  </h3>
-                  <p className={`text-[11px] font-semibold ${card.subtextClass} mt-1 opacity-90`}>
-                    {card.subtitle}
-                  </p>
-                </div>
-                <div className={`w-6 h-6 rounded-full flex-shrink-0 ${card.arrowBgClass} flex items-center justify-center group-hover:translate-x-1 transition-transform`}>
-                  <ArrowRight className={`w-[12px] h-[12px] ${card.arrowIconClass}`} strokeWidth={3} />
-                </div>
+              {/* Bottom: title + subtitle */}
+              <div className="flex flex-col gap-0.5 relative z-10">
+                <h3 className={`text-[14px] font-black ${card.textClass} tracking-tight leading-tight`}>
+                  {card.title}
+                </h3>
+                <p className={`text-[10.5px] font-semibold ${card.subtextClass} opacity-80 leading-tight`}>
+                  {card.subtitle}
+                </p>
               </div>
             </Link>
           ))}
@@ -342,6 +360,7 @@ export default function HomePage() {
                         alt={banner.alt}
                         fill
                         priority={idx === 0}
+                        sizes="100vw"
                         className="object-cover object-center"
                       />
 
@@ -439,6 +458,7 @@ export default function HomePage() {
                     src={news.image}
                     alt={news.title}
                     fill
+                    sizes="(max-width: 640px) 300px, 400px"
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
