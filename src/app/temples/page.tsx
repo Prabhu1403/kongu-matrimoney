@@ -21,6 +21,7 @@ import {
   Heart,
   ArrowRight,
 } from "lucide-react";
+import { useFavourites, FavouriteItem } from "@/context/FavouritesContext";
 
 interface TempleItem {
   id: string;
@@ -215,6 +216,7 @@ export default function TemplesPage() {
   useAuthGuard();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedTemple, setSelectedTemple] = useState<TempleItem | null>(null);
+  const { isFavourite, toggleFavourite } = useFavourites();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -436,6 +438,26 @@ export default function TemplesPage() {
                   <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-[#0f5c35] font-bold text-xs px-3 py-1 rounded-full shadow-sm border border-emerald-100">
                     {temple.badge}
                   </span>
+                  
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleFavourite({
+                        id: temple.id,
+                        type: "temple",
+                        title: temple.name,
+                        subtitle: temple.subTitle,
+                        image: temple.src,
+                        link: "/temples",
+                      });
+                    }}
+                    className="absolute top-4 right-4 bg-white/90 hover:bg-white text-rose-500 rounded-full p-2 backdrop-blur-md transition-colors shadow-sm"
+                  >
+                    <Heart
+                      className="w-5 h-5"
+                      fill={isFavourite(temple.id) ? "currentColor" : "none"}
+                    />
+                  </button>
                 </div>
 
                 <div className="p-6 flex-1 flex flex-col">
@@ -573,10 +595,21 @@ export default function TemplesPage() {
                   </ul>
                 </div>
 
-                <div className="pt-4 border-t border-slate-100 flex justify-end">
+                <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+                  <a
+                    href="https://docs.google.com/forms/d/e/1FAIpQLSeOggsXIeXHs23oXQ4-Je8pn04oU-S9MOCGNCj_61Gm76jS1Q/viewform?usp=publish-editor"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 active:scale-95 text-white text-xs font-bold px-6 py-2.5 rounded-xl transition-all shadow-md shadow-amber-200 w-full sm:w-auto justify-center"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M18 15l3-3m0 0l-3-3m3 3H9" />
+                    </svg>
+                    Register Now
+                  </a>
                   <button
                     onClick={() => setSelectedTemple(null)}
-                    className="bg-[#0f5c35] hover:bg-[#157a47] text-white text-xs font-bold px-6 py-2.5 rounded-xl transition-colors shadow-sm"
+                    className="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold px-6 py-2.5 rounded-xl transition-colors w-full sm:w-auto"
                   >
                     Close Details
                   </button>
