@@ -14,6 +14,7 @@ export default function Navbar() {
     { name: "Events", href: "/events" },
     { name: "Temples", href: "/temples" },
     { name: "Community", href: "/community" },
+    {name:"Quiz",href:"/quizz"}
   ];
 
   return (
