@@ -1,21 +1,33 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Search, Bell } from "lucide-react";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setIsSearchOpen(false);
+      setSearchQuery("");
+    }
+  };
 
   const links = [
     { name: "Home", href: "/home" },
     { name: "Events", href: "/events" },
     { name: "Temples", href: "/temples" },
     { name: "Community", href: "/community" },
-    {name:"Quiz",href:"/quizz"},
-    {name:"Favourites",href:"/favourites"}
+    { name: "Quiz", href: "/quizz" },
+    { name: "Favourites", href: "/favourites" }
   ];
 
   return (
@@ -44,54 +56,70 @@ export default function Navbar() {
       </Link>
 
       {/* Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-10">
-          {links.map((link) => {
-            const isActive = pathname === link.href;
-            return (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="relative py-4 group flex flex-col items-center justify-center h-full"
-              >
-                <span
-                  className={`text-[15px] transition-colors duration-200 ${
-                    isActive
-                      ? "text-[#0f5c35] font-bold"
-                      : "text-[#546881] font-medium hover:text-[#0f5c35]"
+      <nav className="hidden lg:flex items-center gap-10">
+        {links.map((link) => {
+          const isActive = pathname === link.href;
+          return (
+            <Link
+              key={link.name}
+              href={link.href}
+              className="relative py-4 group flex flex-col items-center justify-center h-full"
+            >
+              <span
+                className={`text-[15px] transition-colors duration-200 ${isActive
+                    ? "text-[#0f5c35] font-bold"
+                    : "text-[#546881] font-medium hover:text-[#0f5c35]"
                   }`}
-                >
-                  {link.name}
-                </span>
+              >
+                {link.name}
+              </span>
               {/* Active Indicator */}
-                {isActive && (
-                  <div className="absolute -bottom-1 w-[120%] h-[3px] bg-[#0f5c35] rounded-full" />
-                )}
-              </Link>
-            );
-          })}
-        </nav>
+              {isActive && (
+                <div className="absolute -bottom-1 w-[120%] h-[3px] bg-[#0f5c35] rounded-full" />
+              )}
+            </Link>
+          );
+        })}
+      </nav>
 
       {/* Right Action Icons */}
       <div className="flex items-center gap-7 pl-6">
-            <button className="text-[#0f5c35] hover:text-[#166534] transition-colors p-1 group">
-              <Search className="w-6 h-6 group-hover:scale-110 transition-transform" strokeWidth={1.5} />
-            </button>
-            <button className="text-[#0f5c35] hover:text-[#166534] transition-colors relative p-1 group">
-              <Bell className="w-6 h-6 group-hover:scale-110 transition-transform" strokeWidth={1.5} />
-              <span className="absolute top-[2px] right-[3px] w-[18px] h-[18px] bg-[#ef4444] text-white text-[10px] font-bold flex items-center justify-center rounded-full border border-white">
-                1
-              </span>
-            </button>
-            <Link
-              href="/profile"
-              className="w-10 h-10 rounded-full bg-[#0f5c35] text-white flex items-center justify-center hover:bg-[#166534] transition-colors shadow-sm active:scale-95"
-              aria-label="My Profile"
-            >
+        <div className="relative flex items-center">
+          {isSearchOpen && (
+            <form onSubmit={handleSearchSubmit} className="absolute right-8 mr-2 w-48 md:w-64 transition-all duration-300 origin-right">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search..."
+                autoFocus
+                className="w-full pl-4 pr-3 py-1.5 border border-gray-200 rounded-full focus:outline-none focus:border-[#0f5c35] focus:ring-1 focus:ring-[#0f5c35] text-sm"
+              />
+            </form>
+          )}
+          <button 
+            onClick={() => setIsSearchOpen(!isSearchOpen)}
+            className="text-[#0f5c35] hover:text-[#166534] transition-colors p-1 group z-10 bg-white"
+          >
+            <Search className="w-6 h-6 group-hover:scale-110 transition-transform" strokeWidth={1.5} />
+          </button>
+        </div>
+        <button className="text-[#0f5c35] hover:text-[#166534] transition-colors relative p-1 group">
+          <Bell className="w-6 h-6 group-hover:scale-110 transition-transform" strokeWidth={1.5} />
+          <span className="absolute top-[2px] right-[3px] w-[18px] h-[18px] bg-[#ef4444] text-white text-[10px] font-bold flex items-center justify-center rounded-full border border-white">
+            1
+          </span>
+        </button>
+        <Link
+          href="/profile"
+          className="w-10 h-10 rounded-full bg-[#0f5c35] text-white flex items-center justify-center hover:bg-[#166534] transition-colors shadow-sm active:scale-95"
+          aria-label="My Profile"
+        >
           {/* Custom filled user icon */}
-              <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white">
-                <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" />
-              </svg>
-            </Link>
+          <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white">
+            <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" />
+          </svg>
+        </Link>
       </div>
 
     </header>

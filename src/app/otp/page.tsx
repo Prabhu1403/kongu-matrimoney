@@ -193,7 +193,7 @@ export default function OtpPage() {
               Enter Verification Code
             </h1>
             <p className="text-xs sm:text-sm text-slate-500 leading-relaxed mb-8 font-medium">
-              We've sent a 4-digit code to your mobile number. Please enter it below to verify your account.
+              We&apos;ve sent a 4-digit code to your mobile number. Please enter it below to verify your account.
             </p>
 
             {/* OTP Form */}
@@ -249,7 +249,7 @@ export default function OtpPage() {
               {/* Resend OTP */}
               <div className="text-center pt-2">
                 <span className="text-xs text-slate-500 font-medium">
-                  Didn't receive the code?{" "}
+                  Didn&apos;t receive the code?{" "}
                 </span>
                 <button
                   type="button"

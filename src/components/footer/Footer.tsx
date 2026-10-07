@@ -77,7 +77,7 @@ export default function Footer() {
             <div className="overflow-y-auto px-6 py-5 space-y-5 text-sm text-slate-600 leading-relaxed flex-1">
               <section>
                 <h3 className="font-extrabold text-slate-800 text-[15px] mb-2">1. Acceptance of Terms</h3>
-                <p>By accessing or using the KONGU Community Platform ("Platform"), you agree to be bound by these Terms &amp; Conditions. If you do not agree to these terms, please do not use the Platform.</p>
+                <p>By accessing or using the KONGU Community Platform (&quot;Platform&quot;), you agree to be bound by these Terms &amp; Conditions. If you do not agree to these terms, please do not use the Platform.</p>
               </section>
 
               <section>
@@ -113,7 +113,7 @@ export default function Footer() {
 
               <section>
                 <h3 className="font-extrabold text-slate-800 text-[15px] mb-2">7. Disclaimer</h3>
-                <p>The Platform is provided "as is" without warranties of any kind. We do not guarantee the accuracy of member profiles or the suitability of matches. Matrimonial decisions are the sole responsibility of the individuals involved.</p>
+                <p>The Platform is provided &quot;as is&quot; without warranties of any kind. We do not guarantee the accuracy of member profiles or the suitability of matches. Matrimonial decisions are the sole responsibility of the individuals involved.</p>
               </section>
 
               <section>
@@ -212,7 +212,7 @@ export default function Footer() {
               </section>
 
               <section>
-                <h3 className="font-extrabold text-slate-800 text-[15px] mb-2">8. Children's Privacy</h3>
+                <h3 className="font-extrabold text-slate-800 text-[15px] mb-2">8. Children&apos;s Privacy</h3>
                 <p>The Platform is not intended for individuals under the age of 18. We do not knowingly collect personal information from minors. If you believe a minor has registered, please contact us immediately.</p>
               </section>
 
