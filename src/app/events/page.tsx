@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import { useFavourites, FavouriteItem } from "@/context/FavouritesContext";
 
-interface EventItem {
+export interface EventItem {
   id: string;
   badge: string;
   title1: string;
@@ -40,7 +40,7 @@ interface EventItem {
   src: string;
 }
 
-const eventsList: EventItem[] = [
+export const eventsList: EventItem[] = [
   {
     id: "aadi-perukku",
     badge: "Cultural Festival",
@@ -306,8 +306,8 @@ export default function EventsPage() {
                 key={idx}
                 onClick={() => setCurrentSlide(idx)}
                 className={`h-2.5 rounded-full transition-all duration-300 ${idx === currentSlide
-                    ? "bg-[#0f5c35] w-7"
-                    : "bg-slate-300 w-2.5"
+                  ? "bg-[#0f5c35] w-7"
+                  : "bg-slate-300 w-2.5"
                   }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
@@ -346,7 +346,7 @@ export default function EventsPage() {
                   <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-[#0f5c35] font-bold text-xs px-3 py-1 rounded-full shadow-sm border border-emerald-100">
                     {event.badge}
                   </span>
-                  
+
                   {/* Favourite Button */}
                   <button
                     onClick={(e) => {
@@ -486,7 +486,7 @@ export default function EventsPage() {
                   <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-[#0f5c35] font-bold text-xs px-3 py-1 rounded-full shadow-sm border border-emerald-100">
                     {templeEvent.badge}
                   </span>
-                  
+
                   {/* Favourite Button */}
                   <button
                     onClick={(e) => {
@@ -649,7 +649,7 @@ export default function EventsPage() {
                   <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-[#0f5c35] font-bold text-xs px-3 py-1 rounded-full shadow-sm border border-emerald-100">
                     {program.badge}
                   </span>
-                  
+
                   {/* Favourite Button */}
                   <button
                     onClick={(e) => {

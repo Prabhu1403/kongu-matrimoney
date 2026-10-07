@@ -41,7 +41,7 @@ interface TempleItem {
   src: string;
 }
 
-const templeList: TempleItem[] = [
+export const templeList: TempleItem[] = [
   {
     id: "marudhamalai-murugan",
     badge: "Hill Temple",
